@@ -13,9 +13,17 @@ interface BoxProps {
   style?: React.CSSProperties;
 }
 
+interface GithubBannerProps {
+  children: JSX.Element | readonly JSX.Element[];
+}
+
 export const HBox = (props: BoxProps) => Box(props, "h");
 
 export const VBox = (props: BoxProps) => Box(props, "v");
+
+export function GithubBanner(props: GithubBannerProps): JSX.Element {
+  return <div className="gh-banner">{props.children}</div>;
+}
 
 function Box(props: BoxProps, orientation: Orientation): JSX.Element {
   let className = props.centered ? `c${orientation}box` : `${orientation}box`;

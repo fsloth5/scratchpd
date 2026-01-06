@@ -19,17 +19,19 @@
 }
 
 .cvbox {
-  @include box($direction: column);
-  justify-content: center;
-  align-items: center;
+  @include centeredBox($direction: column);
 }
 
 .chbox {
-  @include box;
-  justify-content: center;
-  align-items: center;
+  @include centeredBox($direction: row);
 }
 
 .al-s {
   align-items: flex-start;
+}
+
+.gh-banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

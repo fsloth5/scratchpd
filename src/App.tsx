@@ -1,10 +1,10 @@
 import React from "react";
 
-import { HBox, VBox } from "./components/Container";
+import { HBox, VBox, GithubBanner } from "./components/Container";
 import CodeWindow from "./components/CodeWindow";
 import Spacer from "./components/Spacer";
 import SettingsTabs from "./components/SettingsTabs";
-import ImageLink from "./components/ImageLink";
+import { GithubRibbon } from "./components/ImageLink";
 import Screenshot from "./components/Screenshot";
 import { CodeWindowEvents } from "./CodeWindowEvents";
 import { THEMES } from "./EditorConstants";
@@ -63,57 +63,57 @@ export default class App extends React.Component<Empty, AppState> {
     const spacerAmount = "2em";
 
     return (
-      <VBox centered={true}>
-        <HBox centered={true}>
-          <h1 id="header">Scratchpad</h1>
-          <ImageLink
-            id="project-link"
-            imageDescription="Github logo"
-            image="/github.png"
-            url="https://github.com/flyingsl0ths/scratchpad"
+      <div ref={this.appRef}>
+        <GithubBanner>
+          <GithubRibbon />
+        </GithubBanner>
+
+        <VBox centered={true}>
+          <HBox centered={true}>
+            <h1 id="header">Scratchpad</h1>
+          </HBox>
+
+          <Spacer amount={spacerAmount} />
+
+          <CodeWindow
+            dropShadowAlpha={this.state.windowDropShadowAlpha}
+            dropShadowOffsets={{
+              x: this.state.windowDropShadowOffsetX,
+              y: this.state.windowDropShadowOffsetY
+            }}
+            editorFontSize={this.state.editorFontSize}
+            editorFont={this.state.editorFont}
+            editorLanguage={this.state.editorLanguage}
+            editorLineHeight={this.state.editorLineHeight}
+            editorTheme={this.state.editorTheme}
+            fileName={this.state.fileName}
+            showDropShadow={this.state.showWindowDropShadow}
+            showEditorLineNumbers={this.state.showLineNumbers}
+            titlebarTheme={this.state.titlebarTheme}
+            windowBgColor={this.state.windowBgColor}
+            windowPadding={{
+              x: this.state.windowPaddingH,
+              y: this.state.windowPaddingV
+            }}
           />
-        </HBox>
 
-        <Spacer amount={spacerAmount} />
+          <Spacer amount={spacerAmount} />
 
-        <CodeWindow
-          dropShadowAlpha={this.state.windowDropShadowAlpha}
-          dropShadowOffsets={{
-            x: this.state.windowDropShadowOffsetX,
-            y: this.state.windowDropShadowOffsetY
-          }}
-          editorFontSize={this.state.editorFontSize}
-          editorFont={this.state.editorFont}
-          editorLanguage={this.state.editorLanguage}
-          editorLineHeight={this.state.editorLineHeight}
-          editorTheme={this.state.editorTheme}
-          fileName={this.state.fileName}
-          showDropShadow={this.state.showWindowDropShadow}
-          showEditorLineNumbers={this.state.showLineNumbers}
-          titlebarTheme={this.state.titlebarTheme}
-          windowBgColor={this.state.windowBgColor}
-          windowPadding={{
-            x: this.state.windowPaddingH,
-            y: this.state.windowPaddingV
-          }}
-        />
+          <Screenshot
+            onFileNameChange={this.handleFileNameChange}
+            appRef={this.appRef}
+          />
 
-        <Spacer amount={spacerAmount} />
+          <Spacer amount={spacerAmount} />
 
-        <Screenshot
-          onFileNameChange={this.handleFileNameChange}
-          targetId="code-window-bg"
-        />
-
-        <Spacer amount={spacerAmount} />
-
-        <SettingsTabs
-          onCodeWindowChange={this.handleCodeWindowChanges}
-          selectedLanguage={this.state.editorLanguage}
-          selectedTheme={this.state.editorTheme}
-          windowBgColor={this.state.windowBgColor}
-        />
-      </VBox>
+          <SettingsTabs
+            onCodeWindowChange={this.handleCodeWindowChanges}
+            selectedLanguage={this.state.editorLanguage}
+            selectedTheme={this.state.editorTheme}
+            windowBgColor={this.state.windowBgColor}
+          />
+        </VBox>
+      </div>
     );
   }
 
