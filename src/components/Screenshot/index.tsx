@@ -13,7 +13,7 @@ const FILE_EXTENSIONS = ["jpeg", "png", "svg"] as const;
 
 interface ScreenshotProps {
   onFileNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  targetId: string;
+  appRef: React.RefObject<HTMLDivElement>;
 }
 
 interface ScreenshotState {
@@ -26,7 +26,7 @@ export default class Screenshot extends React.Component<
   ScreenshotProps,
   ScreenshotState
 > {
-  private targetId: string;
+  private appRef: React.RefObject<HTMLDivElement>;
   constructor(props: ScreenshotProps) {
     super(props);
 
@@ -36,7 +36,7 @@ export default class Screenshot extends React.Component<
       fileName: ""
     };
 
-    this.targetId = props.targetId;
+    this.appRef = props.appRef;
   }
 
   render() {
@@ -77,7 +77,7 @@ export default class Screenshot extends React.Component<
           size="medium"
           startIcon={<ScreenshotMonitor />}
           variant="contained">
-          Screenshot
+          {"Screenshot"}
         </Button>
       </VBox>
     );
@@ -110,7 +110,9 @@ export default class Screenshot extends React.Component<
       return;
     }
 
-    const target = document.getElementById(this.targetId);
+    const target = this.appRef.current?.children[1].children[2] as
+      | HTMLElement
+      | undefined;
 
     if (!target) {
       console.error("No screenshot target!");

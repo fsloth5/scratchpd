@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 
 import { HBox, VBox, GithubBanner } from "./components/Container";
 import CodeWindow from "./components/CodeWindow";
@@ -32,6 +32,8 @@ interface AppState {
 }
 
 export default class App extends React.Component<Empty, AppState> {
+  private appRef: React.RefObject<HTMLDivElement> = createRef();
+
   constructor(props: Empty) {
     super(props);
 
