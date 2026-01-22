@@ -83,8 +83,7 @@ interface AppState {
 export default class App extends React.Component<Utils.Empty, AppState> {
 	private appRef: React.RefObject<HTMLDivElement> = createRef();
 
-	handleKeyPress = (e: KeyboardEvent) => {
-		// Check for specific key combinations
+	private handleKeyPress = (e: KeyboardEvent) => {
 		if (e.key === "a" || (e.shiftKey && e.key === "a")) {
 			e.preventDefault();
 			this.setState({
@@ -152,9 +151,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 
 				<VBox centered={true}>
 					<HBox centered={true}>
-						<h1 id="header" className="slide-up-fade-in">
-							Scratchpad
-						</h1>
+						<h1 id="header">Scratchpad</h1>
 					</HBox>
 					<Spacer amount={spacerAmount} />
 					<CodeWindow
