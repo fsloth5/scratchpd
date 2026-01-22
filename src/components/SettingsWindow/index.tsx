@@ -18,14 +18,14 @@ interface ThemeSettingsWindowProps {
 		selectedTheme: string;
 	};
 	position: "s-left" | "left";
-	animation: "slide-in" | "slide-out";
+	animation: "" | "slide-in" | "slide-out";
 }
 
 interface SceneSettingsWindowProps {
 	onCodeWindowChange: CodeWindowChange;
 	windowBgColor: string;
 	position: "s-right" | "right";
-	animation: "slide-in-right" | "slide-out-right";
+	animation: "" | "slide-in-right" | "slide-out-right";
 }
 
 export function ThemeSettingsWindow(

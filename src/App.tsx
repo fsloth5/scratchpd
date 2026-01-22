@@ -73,10 +73,11 @@ interface AppState {
 	windowDropShadowOffsetY: number;
 	windowPaddingH: number;
 	windowPaddingV: number;
-	desktopMenuState: {
-		openThemeWindow: boolean;
-		openSceneWindow: boolean;
-	};
+
+	openThemeWindow: boolean;
+	openSceneWindow: boolean;
+	themeWindowEverOpened: boolean;
+	sceneWindowEverOpened: boolean;
 }
 
 export default class App extends React.Component<Utils.Empty, AppState> {
@@ -87,20 +88,16 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 		if (e.key === "a" || (e.shiftKey && e.key === "a")) {
 			e.preventDefault();
 			this.setState({
-				desktopMenuState: {
-					openThemeWindow: !this.state.desktopMenuState.openThemeWindow,
-					openSceneWindow: this.state.desktopMenuState.openSceneWindow,
-				},
+				openThemeWindow: !this.state.openThemeWindow,
+				themeWindowEverOpened: true,
 			});
 		}
 
 		if (e.key === "d" || (e.shiftKey && e.key === "d")) {
 			e.preventDefault();
 			this.setState({
-				desktopMenuState: {
-					openThemeWindow: this.state.desktopMenuState.openThemeWindow,
-					openSceneWindow: !this.state.desktopMenuState.openSceneWindow,
-				},
+				openSceneWindow: !this.state.openSceneWindow,
+				sceneWindowEverOpened: true,
 			});
 		}
 	};
@@ -127,7 +124,10 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			windowDropShadowOffsetY: 2,
 			windowPaddingH: 5,
 			windowPaddingV: 5,
-			desktopMenuState: { openThemeWindow: false, openSceneWindow: false },
+			openThemeWindow: false,
+			openSceneWindow: false,
+			themeWindowEverOpened: false,
+			sceneWindowEverOpened: false,
 		};
 
 		updateTheme(defaultTheme);
@@ -152,11 +152,11 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 
 				<VBox centered={true}>
 					<HBox centered={true}>
-						<h1 id="header">Scratchpad</h1>
+						<h1 id="header" className="slide-up-fade-in">
+							Scratchpad
+						</h1>
 					</HBox>
-
 					<Spacer amount={spacerAmount} />
-
 					<CodeWindow
 						dropShadowAlpha={this.state.windowDropShadowAlpha}
 						dropShadowOffsets={{
@@ -178,63 +178,48 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 							y: this.state.windowPaddingV,
 						}}
 					/>
-
 					<Spacer amount={spacerAmount} />
-
 					<Screenshot
 						onFileNameChange={this.handleFileNameChange}
 						appRef={this.appRef}
 					/>
-
 					<Spacer amount={"1em 0"} />
 
-					{this.state.desktopMenuState.openThemeWindow ? (
-						<ThemeSettingsWindow
-							onCodeWindowChange={this.handleCodeWindowChanges}
-							position={"left"}
-							animation={"slide-in"}
-							settings={{
-								selectedLanguage: this.state.editorLanguage,
-								selectedTheme: this.state.editorTheme,
-							}}
-						/>
-					) : (
-						<ThemeSettingsWindow
-							onCodeWindowChange={this.handleCodeWindowChanges}
-							position={"s-left"}
-							animation={"slide-out"}
-							settings={{
-								selectedLanguage: this.state.editorLanguage,
-								selectedTheme: this.state.editorTheme,
-							}}
-						/>
-					)}
-					{this.state.desktopMenuState.openSceneWindow ? (
-						<SceneSettingsWindow
-							onCodeWindowChange={this.handleCodeWindowChanges}
-							windowBgColor={this.state.windowBgColor}
-							position={"right"}
-							animation={"slide-in-right"}
-						/>
-					) : (
-						<SceneSettingsWindow
-							onCodeWindowChange={this.handleCodeWindowChanges}
-							windowBgColor={this.state.windowBgColor}
-							position={"s-right"}
-							animation={"slide-out-right"}
-						/>
-					)}
+					<ThemeSettingsWindow
+						onCodeWindowChange={this.handleCodeWindowChanges}
+						position={this.state.openThemeWindow ? "left" : "s-left"}
+						animation={
+							!this.state.themeWindowEverOpened
+								? ""
+								: this.state.openThemeWindow
+									? "slide-in"
+									: "slide-out"
+						}
+						settings={{
+							selectedLanguage: this.state.editorLanguage,
+							selectedTheme: this.state.editorTheme,
+						}}
+					/>
+
+					<SceneSettingsWindow
+						onCodeWindowChange={this.handleCodeWindowChanges}
+						windowBgColor={this.state.windowBgColor}
+						position={this.state.openSceneWindow ? "right" : "s-right"}
+						animation={
+							!this.state.sceneWindowEverOpened
+								? ""
+								: this.state.openSceneWindow
+									? "slide-in-right"
+									: "slide-out-right"
+						}
+					/>
 
 					<HBox centered={true}>
 						<Button
 							onClick={() =>
 								this.setState({
-									desktopMenuState: {
-										openSceneWindow:
-											this.state.desktopMenuState.openSceneWindow,
-										openThemeWindow:
-											!this.state.desktopMenuState.openThemeWindow,
-									},
+									openThemeWindow: !this.state.openThemeWindow,
+									themeWindowEverOpened: true,
 								})
 							}
 							size="large"
@@ -249,12 +234,8 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 						<Button
 							onClick={() =>
 								this.setState({
-									desktopMenuState: {
-										openSceneWindow:
-											!this.state.desktopMenuState.openSceneWindow,
-										openThemeWindow:
-											this.state.desktopMenuState.openThemeWindow,
-									},
+									openSceneWindow: !this.state.openSceneWindow,
+									sceneWindowEverOpened: true,
 								})
 							}
 							size="large"
@@ -268,6 +249,8 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			</div>
 		);
 	}
+
+	private handleInitialDisplay = () => { };
 
 	private handleFileNameChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
