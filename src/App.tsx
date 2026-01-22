@@ -12,6 +12,45 @@ import { Empty, Primitive } from "./Utils";
 
 import "./scss/index.scss";
 
+interface GithubBannerProps {
+	children: JSX.Element | readonly JSX.Element[];
+}
+
+const GithubBanner = (props: GithubBannerProps): JSX.Element => {
+	return (
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "flex-end",
+			}}
+		>
+			{props.children}
+		</div>
+	);
+};
+
+const GithubRibbon = (): JSX.Element => {
+	return (
+		<a
+			href="https://github.com/fsloth5/scratchpad.git"
+			target="_blank"
+			rel="noopener noreferrer"
+			className="shimmer-container shimmer-screen"
+		>
+			<img
+				loading="lazy"
+				decoding="async"
+				width="140"
+				height="140"
+				src="https://github.blog/wp-content/uploads/2008/12/forkme_right_red_aa0000.png"
+				className="attachment-full size-full"
+				alt="Fork me on GitHub"
+			/>
+		</a>
+	);
+};
+
 interface AppState {
   editorExtraThemes: string[];
   editorFont: string;
