@@ -1,23 +1,28 @@
-import React from "react";
 import { VBox } from "../Container";
 import LabeledIcon from "../LabledIcon";
 import Spacer from "../Spacer";
 
 interface SectionProps {
-  children: readonly JSX.Element[];
-  icon: JSX.Element;
-  title: string;
+	children: readonly JSX.Element[];
+	icon: JSX.Element;
+	spacerAmount?: number;
+	title: string;
 }
 
 export default function Section(props: SectionProps): JSX.Element {
-  const children = [...props.children];
+	const children = [
+		<LabeledIcon key={-2} label={props.title}>
+			{props.icon}
+		</LabeledIcon>,
 
-  children.push(<LabeledIcon label={props.title}>{props.icon}</LabeledIcon>);
-  children.push(<Spacer amount="0.25em" />);
+		<Spacer key={-1} amount={`${props.spacerAmount || 0.25}em`} />,
 
-  return (
-    <VBox className="section" centered={false}>
-      {props.children}
-    </VBox>
-  );
+		...props.children,
+	];
+
+	return (
+		<VBox className="section" centered={false}>
+			{children}
+		</VBox>
+	);
 }

@@ -1,10 +1,8 @@
-import React from "react";
-
 interface ImageLinkProps {
-  id?: string;
-  imageDescription: string;
-  image: string;
-  url: string;
+	id?: string;
+	imageDescription: string;
+	image: string;
+	url: string;
 }
 
 export default function ImageLink(props: ImageLinkProps): JSX.Element {

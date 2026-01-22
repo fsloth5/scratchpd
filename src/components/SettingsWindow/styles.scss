@@ -1,0 +1,106 @@
+.modal {
+  position: fixed;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  height: 85%;
+  z-index: 2;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+@mixin mk-left-alignment($offset) {
+  top: 50%;
+  left: 14%;
+  padding: 1.5em 0 1.5em 1.5em;
+  transform: translate($offset, -50%);
+}
+
+.left {
+  @include mk-left-alignment(-50%);
+}
+
+.s-left {
+  @include mk-left-alignment(-165%);
+}
+
+@mixin mk-right-alignment($offset) {
+  top: 50%;
+  right: 14%;
+  padding: 1.5em 0 1.5em 1.5em;
+  transform: translate($offset, -50%);
+}
+
+.right {
+  @include mk-right-alignment(50%);
+}
+
+.s-right {
+  @include mk-right-alignment(165%);
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+  }
+}
+
+.slide-in {
+  animation: slideInLeft 0.45s ease-out;
+}
+
+.slide-out {
+  animation: slideOutLeft 0.45s ease-in;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate(150%, -50%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(50%, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translate(50%, -50%);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate(150%, -50%);
+    opacity: 0;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.45s ease-out;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.45s ease-in;
+}
