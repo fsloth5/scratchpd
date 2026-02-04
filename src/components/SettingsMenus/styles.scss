@@ -13,8 +13,8 @@
 
 @mixin mk-left-alignment($offset) {
   top: 50%;
-  left: 14%;
-  padding: 1.5em 0 1.5em 0;
+  left: 15%;
+  padding: 0.9em;
   transform: translate($offset, -50%);
 }
 
@@ -28,8 +28,8 @@
 
 @mixin mk-right-alignment($offset) {
   top: 50%;
-  right: 14%;
-  padding: 1.5em 0 1.5em 0;
+  right: 15%;
+  padding: 0.9em;
   transform: translate($offset, -50%);
 }
 
