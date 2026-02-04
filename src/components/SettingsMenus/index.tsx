@@ -1,18 +1,22 @@
 import {
 	type CodeWindowChange,
-	CodeWindowEvents,
+	CodeWindowEvents as CodeWindowEvents_1,
 	withChange,
 } from "../../CodeWindowEvents";
-import { VBox } from "../Container";
 import { LanguageDropdown } from "../LanguageTab";
 import SceneTab from "../SceneTab";
 import { ThemeDropdown } from "../ThemeTab";
-
-import "./styles.scss";
 import "../SettingsTabs/styles.scss";
+import FormatColorTextIcon from "@mui/icons-material/FormatColorText";
+import MonitorIcon from "@mui/icons-material/Monitor";
+import { HBox, VBox } from "../Container";
+import LabeledIcon from "../LabledIcon";
+import Spacer from "../Spacer";
+import "./styles.scss";
+import Button from "@mui/material/Button";
 
 interface ThemeSettingsWindowProps {
-	onCodeWindowChange: CodeWindowChange;
+	onSceneChange: CodeWindowChange;
 	settings: {
 		selectedLanguage: string;
 		selectedTheme: string;
@@ -22,49 +26,134 @@ interface ThemeSettingsWindowProps {
 }
 
 interface SceneSettingsWindowProps {
-	onCodeWindowChange: CodeWindowChange;
+	onSceneChange: CodeWindowChange;
 	windowBgColor: string;
 	position: "s-right" | "right";
 	animation: "" | "slide-in-right" | "slide-out-right";
 }
 
-export function ThemeSettingsWindow(
-	props: ThemeSettingsWindowProps,
-): JSX.Element {
+const ThemeMenu = (props: { onSceneChange: CodeWindowChange }): JSX.Element => {
 	return (
-		<VBox
-			centered={false}
-			className={`modal ${props.position} ${props.animation}`}
-		>
+		<VBox centered={false} className="tab-item">
+			<LabeledIcon label="Theme">
+				<FormatColorTextIcon />
+			</LabeledIcon>
+
+			<Spacer amount="0.5em" />
+
 			<ThemeDropdown
 				onThemeChange={withChange(
-					CodeWindowEvents.THEME,
-					props.onCodeWindowChange,
+					CodeWindowEvents_1.THEME,
+					props.onSceneChange,
 				)}
 			/>
 
 			<LanguageDropdown
 				onEditorLanguageChange={withChange(
-					CodeWindowEvents.LANGUAGE,
-					props.onCodeWindowChange,
+					CodeWindowEvents_1.LANGUAGE,
+					props.onSceneChange,
 				)}
 			/>
 		</VBox>
 	);
-}
+};
 
-export function SceneSettingsWindow(
-	props: SceneSettingsWindowProps,
-): JSX.Element {
+const ThemeSettingsMenu = (props: ThemeSettingsWindowProps): JSX.Element => {
+	return (
+		<VBox
+			centered={false}
+			className={`modal ${props.position} ${props.animation}`}
+		>
+			<ThemeMenu onSceneChange={props.onSceneChange} />
+		</VBox>
+	);
+};
+
+const SceneSettingsMenu = (props: SceneSettingsWindowProps): JSX.Element => {
 	return (
 		<VBox
 			centered={true}
 			className={`modal ${props.position} ${props.animation}`}
 		>
 			<SceneTab
-				onSceneChange={props.onCodeWindowChange}
+				onSceneChange={props.onSceneChange}
 				windowBgColor={props.windowBgColor}
 			/>
 		</VBox>
 	);
+};
+
+interface EditorMenuProps {
+	openThemeWindow: boolean;
+	themeWindowEverOpened: boolean;
+	openSceneWindow: boolean;
+	sceneWindowEverOpened: boolean;
+	editorLanguage: string;
+	editorTheme: string;
+	windowBgColor: string;
+
+	handleCodeWindowChanges: CodeWindowChange;
+	handleThemeButtonPress: (open: boolean, everOpened: boolean) => void;
+	handleSceneButtonPress: (open: boolean, everOpened: boolean) => void;
 }
+
+export default (props: EditorMenuProps): JSX.Element => {
+	return (
+		<div>
+			<ThemeSettingsMenu
+				onSceneChange={props.handleCodeWindowChanges}
+				position={props.openThemeWindow ? "left" : "s-left"}
+				animation={
+					!props.themeWindowEverOpened
+						? ""
+						: props.openThemeWindow
+							? "slide-in"
+							: "slide-out"
+				}
+				settings={{
+					selectedLanguage: props.editorLanguage,
+					selectedTheme: props.editorTheme,
+				}}
+			/>
+
+			<SceneSettingsMenu
+				onSceneChange={props.handleCodeWindowChanges}
+				windowBgColor={props.windowBgColor}
+				position={props.openSceneWindow ? "right" : "s-right"}
+				animation={
+					!props.sceneWindowEverOpened
+						? ""
+						: props.openSceneWindow
+							? "slide-in-right"
+							: "slide-out-right"
+				}
+			/>
+
+			<HBox centered={true}>
+				<Button
+					onClick={() =>
+						props.handleThemeButtonPress(!props.openThemeWindow, true)
+					}
+					size="medium"
+					startIcon={<FormatColorTextIcon />}
+					variant="contained"
+				>
+					{"Theme"}
+				</Button>
+
+				<Spacer amount={"1em"} />
+
+				<Button
+					onClick={() =>
+						props.handleSceneButtonPress(!props.openSceneWindow, true)
+					}
+					size="medium"
+					endIcon={<MonitorIcon />}
+					variant="contained"
+				>
+					{"Scene"}
+				</Button>
+			</HBox>
+		</div>
+	);
+};

@@ -1,13 +1,11 @@
+import { createTheme } from "@mui/material/styles";
 import React, { createRef } from "react";
 import { CodeWindowEvents } from "./CodeWindowEvents";
 import CodeWindow from "./components/CodeWindow";
 import { HBox, VBox } from "./components/Container";
 // import SettingsTabs from "./components/SettingsTabs";
 import Screenshot from "./components/Screenshot";
-import {
-	SceneSettingsWindow,
-	ThemeSettingsWindow,
-} from "./components/SettingsMenus";
+import { default as EditorMenu } from "./components/SettingsMenus";
 import Spacer from "./components/Spacer";
 import { THEMES } from "./EditorConstants";
 import type * as Utils from "./Utils";
@@ -116,7 +114,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			showLineNumbers: true,
 			showWindowDropShadow: true,
 			titlebarTheme: "macos",
-			windowBgColor: "#1565c0",
+			windowBgColor: createTheme().palette.primary.main,
 			windowDropShadowAlpha: 20,
 			windowDropShadowOffsetX: 1,
 			windowDropShadowOffsetY: 2,
@@ -174,42 +172,27 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 							y: this.state.windowPaddingV,
 						}}
 					/>
-
 					<Spacer amount={spacerAmount} />
-
 					<Screenshot
 						onFileNameChange={this.handleFileNameChange}
 						appRef={this.appRef}
 					/>
+					<Spacer amount="1em" />
 
-					<ThemeSettingsWindow
-						onCodeWindowChange={this.handleCodeWindowChanges}
-						position={this.state.openThemeWindow ? "left" : "s-left"}
-						animation={
-							!this.state.themeWindowEverOpened
-								? ""
-								: this.state.openThemeWindow
-									? "slide-in"
-									: "slide-out"
-						}
-						settings={{
-							selectedLanguage: this.state.editorLanguage,
-							selectedTheme: this.state.editorTheme,
-						}}
-					/>
-
-					<SceneSettingsWindow
-						onCodeWindowChange={this.handleCodeWindowChanges}
+					<EditorMenu
+						openThemeWindow={this.state.openThemeWindow}
+						themeWindowEverOpened={this.state.themeWindowEverOpened}
+						openSceneWindow={this.state.openSceneWindow}
+						sceneWindowEverOpened={this.state.sceneWindowEverOpened}
+						editorLanguage={this.state.editorLanguage}
+						editorTheme={this.state.editorTheme}
 						windowBgColor={this.state.windowBgColor}
-						position={this.state.openSceneWindow ? "right" : "s-right"}
-						animation={
-							!this.state.sceneWindowEverOpened
-								? ""
-								: this.state.openSceneWindow
-									? "slide-in-right"
-									: "slide-out-right"
-						}
+						handleCodeWindowChanges={this.handleCodeWindowChanges}
+						handleThemeButtonPress={this.handleThemeButtonPress}
+						handleSceneButtonPress={this.handleSceneButtonPress}
 					/>
+
+					<Spacer amount="1em" />
 				</VBox>
 			</div>
 		);
