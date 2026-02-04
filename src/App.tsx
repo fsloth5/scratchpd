@@ -7,7 +7,7 @@ import Screenshot from "./components/Screenshot";
 import {
 	SceneSettingsWindow,
 	ThemeSettingsWindow,
-} from "./components/SettingsWindow";
+} from "./components/SettingsMenus";
 import Spacer from "./components/Spacer";
 import { THEMES } from "./EditorConstants";
 import type * as Utils from "./Utils";
