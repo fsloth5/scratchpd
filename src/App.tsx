@@ -79,9 +79,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 	private appRef: React.RefObject<HTMLDivElement> = createRef();
 
 	private handleKeyPress = (e: KeyboardEvent) => {
-		const noModifiers = !(e.shiftKey || e.ctrlKey || e.altKey);
-
-		if (noModifiers && e.key === "a") {
+		if (e.ctrlKey && e.key === "a") {
 			e.preventDefault();
 			this.setState({
 				openThemeWindow: !this.state.openThemeWindow,
@@ -89,7 +87,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			});
 		}
 
-		if (noModifiers && e.key === "d") {
+		if (e.ctrlKey && e.key === "d") {
 			e.preventDefault();
 			this.setState({
 				openSceneWindow: !this.state.openSceneWindow,
