@@ -16,9 +16,7 @@ export default function LabeledIcon(props: LabeledIconProps): JSX.Element {
 				style={{
 					fontWeight: 500,
 				}}
-				className={
-					props.labelStyle ? `m-rs l-icon ${props.labelStyle}` : "m-rs l-icon"
-				}
+				className={props.labelStyle ? `m-rs ${props.labelStyle}` : "m-rs"}
 			>
 				{props.label}
 			</h3>
