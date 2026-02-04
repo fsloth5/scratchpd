@@ -36,7 +36,7 @@ interface WindowBackdropOptionsProps {
 }
 
 interface TitleBarThemeContainerProps {
-	onnClick: (value: string) => void;
+	onClick: (value: string) => void;
 	theme: string;
 }
 
@@ -113,12 +113,12 @@ function TitleBarOptions(props: TitleBarOptionsProps): JSX.Element {
 		<VBox centered={false}>
 			<List orientation="h">
 				<TitleBarThemeContainer
-					onnClick={props.onWindowTitleBarChange}
+					onClick={props.onWindowTitleBarChange}
 					theme="macos"
 				/>
 
 				<TitleBarThemeContainer
-					onnClick={props.onWindowTitleBarChange}
+					onClick={props.onWindowTitleBarChange}
 					theme="windows"
 				/>
 			</List>
@@ -130,7 +130,18 @@ function TitleBarThemeContainer(
 	props: TitleBarThemeContainerProps,
 ): JSX.Element {
 	return (
-		<div onClick={() => props.onnClick(props.theme)} className="rounded-border">
+		<div
+			onClick={() => props.onClick(props.theme)}
+			className="rounded-border"
+			style={{
+				margin: "0.8em",
+				width: "100%",
+				borderRadius: "4px",
+				paddingBottom: "2em",
+				boxShadow:
+					"0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)",
+			}}
+		>
 			<TitleBar theme={props.theme} />
 		</div>
 	);

@@ -14,7 +14,7 @@
 @mixin mk-left-alignment($offset) {
   top: 50%;
   left: 14%;
-  padding: 1.5em 0 1.5em 1.5em;
+  padding: 1.5em 0 1.5em 0;
   transform: translate($offset, -50%);
 }
 
@@ -29,7 +29,7 @@
 @mixin mk-right-alignment($offset) {
   top: 50%;
   right: 14%;
-  padding: 1.5em 0 1.5em 1.5em;
+  padding: 1.5em 0 1.5em 0;
   transform: translate($offset, -50%);
 }
 

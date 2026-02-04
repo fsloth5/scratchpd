@@ -21,7 +21,12 @@ export default function Section(props: SectionProps): JSX.Element {
 	];
 
 	return (
-		<VBox className="section" centered={false}>
+		<VBox
+			style={{
+				margin: "1.5em",
+			}}
+			centered={false}
+		>
 			{children}
 		</VBox>
 	);

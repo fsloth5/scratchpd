@@ -1,5 +1,4 @@
 import BrushIcon from "@mui/icons-material/Brush";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
 import * as EditorConstants from "../../EditorConstants";
 import { VBox } from "../Container";
 import LabeledIcon from "../LabledIcon";

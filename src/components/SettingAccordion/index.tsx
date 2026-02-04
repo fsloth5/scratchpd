@@ -6,6 +6,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { VBox } from "../Container";
 import Spacer from "../Spacer";
 
+import "./styles.scss";
+
 interface SettingAccordionProps {
 	children: JSX.Element;
 	subTitle: string;

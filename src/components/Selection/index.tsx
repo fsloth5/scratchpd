@@ -4,8 +4,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import React from "react";
 
-import "./styles.scss";
-
 interface SelectionProps {
 	defaultValue: number;
 	label: string;

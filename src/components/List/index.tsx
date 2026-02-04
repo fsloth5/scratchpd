@@ -26,7 +26,7 @@ export function List(props: ListProps): JSX.Element {
 			centered={false}
 			className={`${props.orientation}-list`}
 			id={props.id}
-			OnClick={props.onClick}
+			onClick={props.onClick}
 		>
 			{props.children}
 		</VBox>
@@ -35,7 +35,7 @@ export function List(props: ListProps): JSX.Element {
 			centered={false}
 			className={`${props.orientation}-list`}
 			id={props.id}
-			OnClick={props.onClick}
+			onClick={props.onClick}
 		>
 			{props.children}
 		</HBox>
@@ -51,6 +51,7 @@ export function ButtonList(props: ButtonListProps): JSX.Element {
 
 	const buttons = props.labels.map((label, i) => (
 		<Button
+			className="mt-btn"
 			variant={props.selected === label ? "contained" : "outlined"}
 			sx={buttonStyle}
 			fullWidth={true}
@@ -63,7 +64,17 @@ export function ButtonList(props: ButtonListProps): JSX.Element {
 	));
 
 	return (
-		<List onClick={props.onClick} orientation={props.orientation}>
+		<List
+			onClick={(e) => {
+				const target = e.target as HTMLElement;
+
+				if (target.classList.contains("mt-btn")) {
+					props.onClick?.(e);
+					e.stopPropagation();
+				}
+			}}
+			orientation={props.orientation}
+		>
 			{buttons}
 		</List>
 	);
