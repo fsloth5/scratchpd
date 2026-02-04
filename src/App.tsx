@@ -1,6 +1,3 @@
-import DvrIcon from "@mui/icons-material/Dvr";
-import FormatPaintRounded from "@mui/icons-material/FormatPaintRounded";
-import Button from "@mui/material/Button";
 import React, { createRef } from "react";
 import { CodeWindowEvents } from "./CodeWindowEvents";
 import CodeWindow from "./components/CodeWindow";
@@ -84,7 +81,9 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 	private appRef: React.RefObject<HTMLDivElement> = createRef();
 
 	private handleKeyPress = (e: KeyboardEvent) => {
-		if (e.key === "a" || (e.shiftKey && e.key === "a")) {
+		const noModifiers = !(e.shiftKey || e.ctrlKey || e.altKey);
+
+		if (noModifiers && e.key === "a") {
 			e.preventDefault();
 			this.setState({
 				openThemeWindow: !this.state.openThemeWindow,
@@ -92,7 +91,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			});
 		}
 
-		if (e.key === "d" || (e.shiftKey && e.key === "d")) {
+		if (noModifiers && e.key === "d") {
 			e.preventDefault();
 			this.setState({
 				openSceneWindow: !this.state.openSceneWindow,
@@ -175,12 +174,13 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 							y: this.state.windowPaddingV,
 						}}
 					/>
+
 					<Spacer amount={spacerAmount} />
+
 					<Screenshot
 						onFileNameChange={this.handleFileNameChange}
 						appRef={this.appRef}
 					/>
-					<Spacer amount={"1em 0"} />
 
 					<ThemeSettingsWindow
 						onCodeWindowChange={this.handleCodeWindowChanges}
@@ -210,44 +210,22 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 									: "slide-out-right"
 						}
 					/>
-
-					<HBox centered={true}>
-						<Button
-							onClick={() =>
-								this.setState({
-									openThemeWindow: !this.state.openThemeWindow,
-									themeWindowEverOpened: true,
-								})
-							}
-							size="large"
-							startIcon={<FormatPaintRounded />}
-							variant="contained"
-						>
-							{"Theme"}
-						</Button>
-
-						<Spacer amount={"0 4em 6em 4em"} />
-
-						<Button
-							onClick={() =>
-								this.setState({
-									openSceneWindow: !this.state.openSceneWindow,
-									sceneWindowEverOpened: true,
-								})
-							}
-							size="large"
-							startIcon={<DvrIcon />}
-							variant="contained"
-						>
-							{"Scene"}
-						</Button>
-					</HBox>
 				</VBox>
 			</div>
 		);
 	}
 
-	private handleInitialDisplay = () => { };
+	private handleThemeButtonPress = (show: boolean, everPressed: boolean) =>
+		this.setState({
+			openThemeWindow: show,
+			themeWindowEverOpened: everPressed,
+		});
+
+	private handleSceneButtonPress = (show: boolean, everPressed: boolean) =>
+		this.setState({
+			openSceneWindow: show,
+			sceneWindowEverOpened: everPressed,
+		});
 
 	private handleFileNameChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
