@@ -40,7 +40,7 @@ export function LanguageDropdown(props: LanguageDropdownProps): JSX.Element {
 		<Section title="Language" icon={<DataObjectIcon />} spacerAmount={0.9}>
 			{[
 				<Selection
-					defaultValue={1}
+					defaultValue={43}
 					key={0}
 					label="Select a language"
 					onSelectionChange={props.onEditorLanguageChange}

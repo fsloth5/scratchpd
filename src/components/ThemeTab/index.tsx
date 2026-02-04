@@ -40,7 +40,7 @@ export function ThemeDropdown(props: ThemeDropdownProps): JSX.Element {
 		<Section title="Theme" icon={<BrushIcon />} spacerAmount={0.9}>
 			{[
 				<Selection
-					defaultValue={1}
+					defaultValue={4}
 					key={0}
 					label="Select a theme"
 					onSelectionChange={props.onThemeChange}
