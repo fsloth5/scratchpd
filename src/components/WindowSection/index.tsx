@@ -175,6 +175,13 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 	const spacerAmount = "0.7em";
 	return (
 		<VBox className="pd-s" centered={false}>
+			<ColorPicker
+				color={props.windowBgColor}
+				onColorChange={props.onWindowBgColorChange}
+			/>
+
+			<Spacer amount={spacerAmount} />
+
 			<FormControlLabel
 				control={
 					<Checkbox
@@ -185,13 +192,6 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 					/>
 				}
 				label="Show shadows"
-			/>
-
-			<Spacer amount={spacerAmount} />
-
-			<ColorPicker
-				color={props.windowBgColor}
-				onColorChange={props.onWindowBgColorChange}
 			/>
 
 			<Spacer amount={spacerAmount} />
