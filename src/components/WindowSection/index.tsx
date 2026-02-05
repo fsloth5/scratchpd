@@ -231,7 +231,7 @@ function ColorPicker(props: ColorPickerProps): JSX.Element {
 	const spacerAmount = "0.7em";
 	return (
 		<VBox centered={false}>
-			<h4 className="fw-n">{`Background color`}</h4>
+			<h4 className="fw-nm">{`Background color`}</h4>
 			<Spacer amount={spacerAmount} />
 			<HexColorPicker
 				color={props.color}

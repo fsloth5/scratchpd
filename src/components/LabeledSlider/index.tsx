@@ -15,7 +15,7 @@ interface LabeledSliderProps {
 export default function LabeledSlider(props: LabeledSliderProps): JSX.Element {
 	return (
 		<VBox centered={false}>
-			<h4 className="fw-n">{props.label}</h4>
+			<h4 className="fw-nm">{props.label}</h4>
 			<Spacer amount="0.5em" />
 			{props.onChange ? (
 				<Slider
