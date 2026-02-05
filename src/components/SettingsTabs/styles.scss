@@ -1,43 +1,10 @@
 #settings-tab {
-  width: 77vw;
+  width: 77%;
 }
 
 .tab-item {
-  margin-top: 1.5em;
-  padding: 0.5em;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
   width: 100%;
   height: 100%;
-}
-
-@media (max-width: 1281px) {
-  #settings-tab {
-    width: 95vw;
-  }
-}
-
-@media (max-width: 921px) {
-  #settings-tab {
-    width: 89vw;
-  }
-
-  .tab-item {
-    margin-top: 0.5m;
-    padding: 1em 0;
-  }
-}
-
-@media (max-width: 821px) {
-  #settings-tab {
-    width: 85vw;
-  }
-}
-
-@media (max-width: 414px) {
-  #settings-tab {
-    width: 90vw;
-  }
-
-  .tab-item {
-    padding: 0.4em;
-  }
 }

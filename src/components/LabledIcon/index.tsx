@@ -9,13 +9,13 @@ interface LabeledIconProps {
 	labelStyle?: string;
 }
 
+const style = { maxWidth: "max-content", fontWeight: 500 };
+
 export default function LabeledIcon(props: LabeledIconProps): JSX.Element {
 	return (
-		<HBox className="mx-w" id={props.id} centered={true}>
+		<HBox style={style} id={props.id} centered={true}>
 			<h3
-				style={{
-					fontWeight: 500,
-				}}
+				style={style}
 				className={props.labelStyle ? `m-rs ${props.labelStyle}` : "m-rs"}
 			>
 				{props.label}
