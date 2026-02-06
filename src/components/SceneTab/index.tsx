@@ -8,8 +8,10 @@ import Spacer from "../Spacer";
 import WindowSection from "../WindowSection";
 
 interface SceneTabProps {
-	onSceneChange: CodeWindowChange;
 	windowBgColor: string;
+	shadowsToggled: boolean;
+	lineNumbersToggled: boolean;
+	onSceneChange: CodeWindowChange;
 }
 
 export default function SceneTab(props: SceneTabProps): JSX.Element {
@@ -22,9 +24,13 @@ export default function SceneTab(props: SceneTabProps): JSX.Element {
 			<List orientation="v">
 				<WindowSection
 					windowBgColor={props.windowBgColor}
+					shadowsToggled={props.shadowsToggled}
 					onSceneChange={props.onSceneChange}
 				/>
-				<EditorSection onEditorSettingsChange={props.onSceneChange} />
+				<EditorSection
+					toggleLineNumbers={props.lineNumbersToggled}
+					onEditorSettingsChange={props.onSceneChange}
+				/>
 			</List>
 		</VBox>
 	);

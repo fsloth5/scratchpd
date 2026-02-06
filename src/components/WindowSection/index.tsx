@@ -13,8 +13,9 @@ import Spacer from "../Spacer";
 import TitleBar from "../TitleBar";
 
 interface WindowSectionProps {
-	onSceneChange: CodeWindowEvents.CodeWindowChange;
 	windowBgColor: string;
+	shadowsToggled: boolean;
+	onSceneChange: CodeWindowEvents.CodeWindowChange;
 }
 
 interface TitleBarOptionsProps {
@@ -27,12 +28,13 @@ interface WindowPaddingOptionsProps {
 }
 
 interface WindowBackdropOptionsProps {
+	windowBgColor: string;
+	toggleShadows: boolean;
 	onWindowBgColorChange: (value: string) => void;
 	onWindowShadowAlphaChange: (value: number) => void;
 	onWindowShadowToggleChange: (value: boolean) => void;
 	onWindowShadowXChange: (value: number) => void;
 	onWindowShadowYChange: (value: number) => void;
-	windowBgColor: string;
 }
 
 interface TitleBarThemeContainerProps {
@@ -81,6 +83,8 @@ export default function WindowSection(props: WindowSectionProps): JSX.Element {
 				title="Window Backdrop"
 			>
 				<WindowBackdropOptions
+					toggleShadows={props.shadowsToggled}
+					windowBgColor={props.windowBgColor}
 					onWindowBgColorChange={CodeWindowEvents.withChange(
 						CodeWindowEvents.CodeWindowEvents.BG_COLOR,
 						props.onSceneChange,
@@ -101,7 +105,6 @@ export default function WindowSection(props: WindowSectionProps): JSX.Element {
 						CodeWindowEvents.CodeWindowEvents.SHADOW_OFFSET_Y,
 						props.onSceneChange,
 					)}
-					windowBgColor={props.windowBgColor}
 				/>
 			</SettingAccordion>
 		</Section>
@@ -151,6 +154,7 @@ function WindowPaddingOptions(props: WindowPaddingOptionsProps): JSX.Element {
 	return (
 		<VBox className="pd-s" centered={false}>
 			<LabeledSlider
+				disabled={false}
 				defaultValue={5}
 				label="Horizontal Padding"
 				max={20}
@@ -158,8 +162,11 @@ function WindowPaddingOptions(props: WindowPaddingOptionsProps): JSX.Element {
 				onChange={props.onHPaddingChange}
 				step={1}
 			/>
+
 			<Spacer amount="1em" />
+
 			<LabeledSlider
+				disabled={false}
 				defaultValue={5}
 				label="Vertical Padding"
 				max={20}
@@ -173,6 +180,8 @@ function WindowPaddingOptions(props: WindowPaddingOptionsProps): JSX.Element {
 
 function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 	const spacerAmount = "0.7em";
+	const shadowsToggled = !props.toggleShadows;
+
 	return (
 		<VBox className="pd-s" centered={false}>
 			<ColorPicker
@@ -185,7 +194,7 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 			<FormControlLabel
 				control={
 					<Checkbox
-						defaultChecked={true}
+						checked={props.toggleShadows}
 						onChange={(event) =>
 							props.onWindowShadowToggleChange(event.target.checked)
 						}
@@ -197,6 +206,7 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 			<Spacer amount={spacerAmount} />
 
 			<LabeledSlider
+				disabled={shadowsToggled}
 				defaultValue={1}
 				label="Horizontal offset"
 				max={100}
@@ -206,7 +216,9 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 			/>
 
 			<Spacer amount={spacerAmount} />
+
 			<LabeledSlider
+				disabled={shadowsToggled}
 				defaultValue={2}
 				label="Vertical offset"
 				max={100}
@@ -214,8 +226,11 @@ function WindowBackdropOptions(props: WindowBackdropOptionsProps): JSX.Element {
 				onChange={props.onWindowShadowYChange}
 				step={1}
 			/>
+
 			<Spacer amount={spacerAmount} />
+
 			<LabeledSlider
+				disabled={shadowsToggled}
 				defaultValue={2}
 				label="Transparency"
 				max={100}

@@ -12,10 +12,12 @@ import SettingAccordion from "../SettingAccordion";
 import Spacer from "../Spacer";
 
 interface EditorSectionProps {
+	toggleLineNumbers: boolean;
 	onEditorSettingsChange: CodeWindowEvents.CodeWindowChange;
 }
 
 interface EditorLinesOptionsProps {
+	toggleLineNumbers: boolean;
 	onEditorLineHeightChange: (value: number) => void;
 	onEditorLinesToggle: (value: boolean) => void;
 }
@@ -49,6 +51,7 @@ export default function EditorSection(props: EditorSectionProps): JSX.Element {
 				title="Lines"
 			>
 				<EditorLinesOptions
+					toggleLineNumbers={props.toggleLineNumbers}
 					onEditorLineHeightChange={CodeWindowEvents.withChange(
 						CodeWindowEvents.CodeWindowEvents.EDITOR_LINES_INCREASED,
 						props.onEditorSettingsChange,
@@ -69,7 +72,7 @@ function EditorLinesOptions(props: EditorLinesOptionsProps): JSX.Element {
 			<FormControlLabel
 				control={
 					<Checkbox
-						defaultChecked={true}
+						checked={props.toggleLineNumbers}
 						onChange={(event) =>
 							props.onEditorLinesToggle(event.target.checked)
 						}
@@ -81,6 +84,7 @@ function EditorLinesOptions(props: EditorLinesOptionsProps): JSX.Element {
 			<Spacer amount="1em" />
 
 			<LabeledSlider
+				disabled={!props.toggleLineNumbers}
 				defaultValue={1.2}
 				label="Line height"
 				max={100}
@@ -107,6 +111,7 @@ function EditorFontOptions(props: EditorFontOptionsProps): JSX.Element {
 			<Spacer amount={spacerAmount} />
 
 			<LabeledSlider
+				disabled={false}
 				defaultValue={21}
 				label="Font size"
 				max={100}

@@ -185,6 +185,8 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 						editorLanguage={this.state.editorLanguage}
 						editorTheme={this.state.editorTheme}
 						windowBgColor={this.state.windowBgColor}
+						shadowsToggled={this.state.showWindowDropShadow}
+						lineNumbersToggled={this.state.showLineNumbers}
 						handleCodeWindowChanges={this.handleCodeWindowChanges}
 						handleThemeButtonPress={this.handleThemeButtonPress}
 						handleSceneButtonPress={this.handleSceneButtonPress}

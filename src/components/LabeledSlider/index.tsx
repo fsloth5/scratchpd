@@ -4,12 +4,13 @@ import { VBox } from "../Container";
 import Spacer from "../Spacer";
 
 interface LabeledSliderProps {
+	disabled: boolean;
 	defaultValue: number;
 	label: string;
 	max: number;
 	min: number;
-	onChange: (value: number) => void;
 	step: number;
+	onChange: (value: number) => void;
 }
 
 export default function LabeledSlider(props: LabeledSliderProps): JSX.Element {
@@ -19,6 +20,7 @@ export default function LabeledSlider(props: LabeledSliderProps): JSX.Element {
 			<Spacer amount="0.5em" />
 			{props.onChange ? (
 				<Slider
+					disabled={props.disabled}
 					defaultValue={props.defaultValue}
 					max={props.max}
 					min={props.min}
@@ -28,6 +30,7 @@ export default function LabeledSlider(props: LabeledSliderProps): JSX.Element {
 				/>
 			) : (
 				<Slider
+					disabled={props.disabled}
 					defaultValue={props.defaultValue}
 					max={props.max}
 					min={props.min}

@@ -26,8 +26,10 @@ interface ThemeSettingsWindowProps {
 }
 
 interface SceneSettingsWindowProps {
-	onSceneChange: CodeWindowChange;
 	windowBgColor: string;
+	shadowsToggled: boolean;
+	lineNumbersToggled: boolean;
+	onSceneChange: CodeWindowChange;
 	position: "s-right" | "right";
 	animation: "" | "slide-in-right" | "slide-out-right";
 }
@@ -76,8 +78,10 @@ const SceneSettingsMenu = (props: SceneSettingsWindowProps): JSX.Element => {
 			className={`modal ${props.position} ${props.animation}`}
 		>
 			<SceneTab
-				onSceneChange={props.onSceneChange}
+				shadowsToggled={props.shadowsToggled}
+				lineNumbersToggled={props.lineNumbersToggled}
 				windowBgColor={props.windowBgColor}
+				onSceneChange={props.onSceneChange}
 			/>
 		</VBox>
 	);
@@ -91,6 +95,8 @@ interface EditorMenuProps {
 	editorLanguage: string;
 	editorTheme: string;
 	windowBgColor: string;
+	shadowsToggled: boolean;
+	lineNumbersToggled: boolean;
 
 	handleCodeWindowChanges: CodeWindowChange;
 	handleThemeButtonPress: (open: boolean, everOpened: boolean) => void;
@@ -117,8 +123,10 @@ export default (props: EditorMenuProps): JSX.Element => {
 			/>
 
 			<SceneSettingsMenu
-				onSceneChange={props.handleCodeWindowChanges}
+				shadowsToggled={props.shadowsToggled}
+				lineNumbersToggled={props.lineNumbersToggled}
 				windowBgColor={props.windowBgColor}
+				onSceneChange={props.handleCodeWindowChanges}
 				position={props.openSceneWindow ? "right" : "s-right"}
 				animation={
 					!props.sceneWindowEverOpened

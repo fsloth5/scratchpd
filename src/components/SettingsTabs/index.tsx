@@ -21,6 +21,8 @@ interface SettingsTabsProps {
 	selectedLanguage: string;
 	selectedTheme: string;
 	windowBgColor: string;
+	shadowsToggled: boolean;
+	lineNumbersToggled: boolean;
 }
 
 function switchTab(
@@ -51,6 +53,8 @@ function switchTab(
 		case 2:
 			return (
 				<SceneTab
+					shadowsToggled={props.shadowsToggled}
+					lineNumbersToggled={props.lineNumbersToggled}
 					onSceneChange={props.onCodeWindowChange}
 					windowBgColor={props.windowBgColor}
 				/>
