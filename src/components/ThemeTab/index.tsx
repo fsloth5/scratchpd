@@ -15,7 +15,7 @@ interface ThemeTabProps {
 export function ThemeTab(props: ThemeTabProps): JSX.Element {
 	return (
 		<VBox id="theme-tab" className="tab-item" centered={false}>
-			<LabeledIcon label="Themes">
+			<LabeledIcon label="Color">
 				<BrushIcon />
 			</LabeledIcon>
 			<Spacer amount="0.5em" />
@@ -37,7 +37,7 @@ interface ThemeDropdownProps {
 
 export function ThemeDropdown(props: ThemeDropdownProps): JSX.Element {
 	return (
-		<Section title="Theme" icon={<BrushIcon />} spacerAmount={0.9}>
+		<Section title="Color" icon={<BrushIcon />} spacerAmount={0.9}>
 			{[
 				<Selection
 					defaultValue={4}
