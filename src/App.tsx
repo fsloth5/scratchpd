@@ -7,7 +7,7 @@ import { HBox, VBox } from "./components/Container";
 import Screenshot from "./components/Screenshot";
 import { default as EditorMenu } from "./components/SettingsMenus";
 import Spacer from "./components/Spacer";
-import { THEMES } from "./EditorConstants";
+import { FONTS, THEMES } from "./EditorConstants";
 import type * as Utils from "./Utils";
 
 import "./scss/index.scss";
@@ -103,7 +103,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 
 		this.state = {
 			editorExtraThemes: [],
-			editorFont: "Fira code",
+			editorFont: FONTS[1],
 			editorFontSize: 21,
 			editorLanguage: "javascript",
 			editorLineHeight: 1.2,
