@@ -3,107 +3,26 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import download from "downloadjs";
 import * as htmlToImage from "html-to-image";
-import React from "react";
+import type React from "react";
+import { FILE_EXTENSIONS } from "../../Constants";
 
 import { HBox, VBox } from "../Container";
 import Selection from "../Selection";
 import Spacer from "../Spacer";
 
-const FILE_EXTENSIONS = ["jpeg", "png", "svg"] as const;
-
 interface ScreenshotProps {
-	onFileNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	appRef: React.RefObject<HTMLDivElement>;
-}
-
-interface ScreenshotState {
-	containsNoFileName: boolean;
-	fileExtension: string;
 	fileName: string;
+	fileExtension: string;
+	handleFileNameChange: (value: string) => void;
+	handleFileExtensionChange: (value: string) => void;
 }
 
-export default class Screenshot extends React.Component<
-	ScreenshotProps,
-	ScreenshotState
-> {
-	private appRef: React.RefObject<HTMLDivElement>;
-	constructor(props: ScreenshotProps) {
-		super(props);
+export default function Screenshot(props: ScreenshotProps): JSX.Element {
+	const handleScreenshot = () => {
+		const fileName = props.fileName;
 
-		this.state = {
-			containsNoFileName: false,
-			fileExtension: FILE_EXTENSIONS[0],
-			fileName: "",
-		};
-
-		this.appRef = props.appRef;
-	}
-
-	render() {
-		const textField = this.state.containsNoFileName ? (
-			<TextField
-				error
-				label="File name"
-				onChange={this.handleFileNameChanged}
-				variant="outlined"
-			/>
-		) : (
-			<TextField
-				label="File name"
-				onChange={this.handleFileNameChanged}
-				variant="outlined"
-			/>
-		);
-
-		return (
-			<VBox centered={false}>
-				<HBox centered={false}>
-					{textField}
-
-					<Spacer amount="0.5em" />
-
-					<Selection
-						defaultValue={1}
-						label="Export as"
-						onSelectionChange={this.handleFileExtensionChanged}
-						values={FILE_EXTENSIONS}
-					/>
-				</HBox>
-
-				<Spacer amount="1em" />
-
-				<Button
-					onClick={this.handleScreenshot}
-					size="medium"
-					startIcon={<ScreenshotMonitor />}
-					variant="contained"
-				>
-					{"Screenshot"}
-				</Button>
-			</VBox>
-		);
-	}
-
-	private handleFileNameChanged = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		this.setState({ fileName: event.target.value });
-		this.props.onFileNameChange(event);
-	};
-
-	private handleFileExtensionChanged = (extension: string) => {
-		this.setState({ fileExtension: extension });
-	};
-
-	private handleScreenshot = () => {
-		const fileName = this.state.fileName;
-
-		if (fileName.length === 0) {
-			this.setState({ containsNoFileName: true });
-			return;
-		}
-
-		const fileExtension = capitalize(this.state.fileExtension);
+		const fileExtension = capitalize(props.fileExtension);
 		const screenshotMethod = fromFileExtension(fileExtension);
 
 		if (!screenshotMethod) {
@@ -111,7 +30,7 @@ export default class Screenshot extends React.Component<
 			return;
 		}
 
-		const target = this.appRef.current?.children[1].children[2] as
+		const target = props.appRef.current?.children[1].children[2] as
 			| HTMLElement
 			| undefined;
 
@@ -121,10 +40,54 @@ export default class Screenshot extends React.Component<
 		}
 
 		screenshotMethod(target).then((dataUrl) => {
-			download(dataUrl, `${fileName}.${this.state.fileExtension}`);
-			this.setState({ containsNoFileName: false });
+			download(dataUrl, `${fileName}.${props.fileExtension}`);
 		});
 	};
+
+	const textField =
+		props.fileName.length === 0 ? (
+			<TextField
+				error
+				label="File name"
+				onChange={(e) => props.handleFileNameChange(e.target.value)}
+				variant="outlined"
+			/>
+		) : (
+			<TextField
+				defaultValue={props.fileName}
+				label="File name"
+				onChange={(e) => props.handleFileNameChange(e.target.value)}
+				variant="outlined"
+			/>
+		);
+
+	return (
+		<VBox centered={false}>
+			<HBox centered={false}>
+				{textField}
+
+				<Spacer amount="0.5em" />
+
+				<Selection
+					defaultValue={1}
+					label="Export as"
+					onSelectionChange={props.handleFileExtensionChange}
+					values={FILE_EXTENSIONS}
+				/>
+			</HBox>
+
+			<Spacer amount="1em" />
+
+			<Button
+				onClick={handleScreenshot}
+				size="medium"
+				startIcon={<ScreenshotMonitor />}
+				variant="contained"
+			>
+				{"Screenshot"}
+			</Button>
+		</VBox>
+	);
 }
 
 function capitalize(fileExtension: string): string {

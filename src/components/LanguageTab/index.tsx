@@ -1,5 +1,5 @@
 import DataObjectIcon from "@mui/icons-material/DataObject";
-import { LANGUAGES } from "../../EditorConstants";
+import { LANGUAGES } from "../../Constants";
 import { VBox } from "../Container";
 import LabeledIcon from "../LabledIcon";
 import { ButtonList } from "../List";

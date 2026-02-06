@@ -3,7 +3,7 @@ import { Checkbox } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import * as CodeWindowEvents from "../../CodeWindowEvents";
-import { FONTS } from "../../EditorConstants";
+import { FONTS } from "../../Constants";
 import { VBox } from "../Container";
 import LabeledSlider from "../LabeledSlider";
 import Section from "../Section";

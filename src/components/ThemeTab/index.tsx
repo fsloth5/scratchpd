@@ -1,5 +1,5 @@
 import BrushIcon from "@mui/icons-material/Brush";
-import * as EditorConstants from "../../EditorConstants";
+import * as EditorConstants from "../../Constants";
 import { VBox } from "../Container";
 import LabeledIcon from "../LabledIcon";
 import { ButtonList } from "../List";

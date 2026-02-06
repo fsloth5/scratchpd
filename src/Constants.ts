@@ -110,3 +110,5 @@ export const FONTS = [
 	"Space Mono",
 	"Ubuntu Mono",
 ] as const;
+
+export const FILE_EXTENSIONS = ["jpeg", "png", "svg"] as const;

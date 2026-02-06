@@ -1,13 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 import React, { createRef } from "react";
 import { CodeWindowEvents } from "./CodeWindowEvents";
+import { FILE_EXTENSIONS, FONTS, LANGUAGES, THEMES } from "./Constants";
 import CodeWindow from "./components/CodeWindow";
 import { HBox, VBox } from "./components/Container";
 // import SettingsTabs from "./components/SettingsTabs";
 import Screenshot from "./components/Screenshot";
 import { default as EditorMenu } from "./components/SettingsMenus";
 import Spacer from "./components/Spacer";
-import { FONTS, LANGUAGES, THEMES } from "./EditorConstants";
 import type * as Utils from "./Utils";
 
 import "./scss/index.scss";
@@ -59,6 +59,10 @@ interface AppState {
 	editorLineHeight: number;
 	editorTheme: string;
 	fileName: string;
+
+	containsNoFileName: boolean;
+	fileExtension: string;
+
 	showLineNumbers: boolean;
 	showWindowDropShadow: boolean;
 	titlebarTheme: string;
@@ -68,7 +72,7 @@ interface AppState {
 	windowDropShadowOffsetY: number;
 	windowPaddingH: number;
 	windowPaddingV: number;
-
+	screenshot: boolean;
 	openThemeWindow: boolean;
 	openSceneWindow: boolean;
 	themeWindowEverOpened: boolean;
@@ -94,6 +98,13 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 				sceneWindowEverOpened: true,
 			});
 		}
+
+		if (e.ctrlKey && e.key === "c") {
+			e.preventDefault();
+			this.setState({
+				screenshot: true,
+			});
+		}
 	};
 
 	constructor(props: Utils.Empty) {
@@ -108,7 +119,9 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			editorLanguage: LANGUAGES[42],
 			editorLineHeight: 1.2,
 			editorTheme: defaultTheme,
-			fileName: "",
+			fileName: "HelloWorld",
+			containsNoFileName: false,
+			fileExtension: FILE_EXTENSIONS[0],
 			showLineNumbers: true,
 			showWindowDropShadow: true,
 			titlebarTheme: "macos",
@@ -118,6 +131,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			windowDropShadowOffsetY: 2,
 			windowPaddingH: 5,
 			windowPaddingV: 5,
+			screenshot: false,
 			openThemeWindow: false,
 			openSceneWindow: false,
 			themeWindowEverOpened: false,
@@ -170,10 +184,15 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 							y: this.state.windowPaddingV,
 						}}
 					/>
+
 					<Spacer amount={spacerAmount} />
+
 					<Screenshot
-						onFileNameChange={this.handleFileNameChange}
 						appRef={this.appRef}
+						fileName={this.state.fileName}
+						fileExtension={this.state.fileExtension}
+						handleFileNameChange={this.handleFileNameChange}
+						handleFileExtensionChange={this.handleFileExtensionChange}
 					/>
 					<Spacer amount="1em" />
 
@@ -210,15 +229,16 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 			sceneWindowEverOpened: everPressed,
 		});
 
-	private handleFileNameChange = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	): void => {
+	private handleFileNameChange = (fileName: string): void => {
 		const cutOff = 20;
-		const fileName: string = event.target.value;
 		this.setState({
 			fileName:
 				fileName.length <= cutOff ? fileName : fileName.slice(0, cutOff),
 		});
+	};
+
+	private handleFileExtensionChange = (newFileExtension: string): void => {
+		this.setState({ fileExtension: newFileExtension });
 	};
 
 	private handleLanguageChange = (newLanguage: string): void => {
