@@ -59,10 +59,8 @@ interface AppState {
 	editorLineHeight: number;
 	editorTheme: string;
 	fileName: string;
-
 	containsNoFileName: boolean;
 	fileExtension: string;
-
 	showLineNumbers: boolean;
 	showWindowDropShadow: boolean;
 	titlebarTheme: string;
@@ -188,6 +186,7 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 					<Spacer amount={spacerAmount} />
 
 					<Screenshot
+						screenshot={this.state.screenshot}
 						appRef={this.appRef}
 						fileName={this.state.fileName}
 						fileExtension={this.state.fileExtension}

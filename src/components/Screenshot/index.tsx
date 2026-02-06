@@ -12,6 +12,7 @@ import Spacer from "../Spacer";
 
 interface ScreenshotProps {
 	appRef: React.RefObject<HTMLDivElement>;
+	screenshot: boolean;
 	fileName: string;
 	fileExtension: string;
 	handleFileNameChange: (value: string) => void;
@@ -22,11 +23,15 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 	const handleScreenshot = () => {
 		const fileName = props.fileName;
 
+		if (!fileName) {
+			return;
+		}
+
 		const fileExtension = capitalize(props.fileExtension);
 		const screenshotMethod = fromFileExtension(fileExtension);
 
 		if (!screenshotMethod) {
-			console.error(`Unknown download method: ${fileExtension}`);
+			console.log(`Unknown download method: ${fileExtension}`);
 			return;
 		}
 
@@ -35,7 +40,7 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 			| undefined;
 
 		if (!target) {
-			console.error("No screenshot target!");
+			console.log("No screenshot target!");
 			return;
 		}
 
@@ -44,22 +49,29 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 		});
 	};
 
+	const onFileNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+		props.handleFileNameChange(e.target.value);
+
 	const textField =
 		props.fileName.length === 0 ? (
 			<TextField
 				error
 				label="File name"
-				onChange={(e) => props.handleFileNameChange(e.target.value)}
+				onChange={onFileNameChanged}
 				variant="outlined"
 			/>
 		) : (
 			<TextField
 				defaultValue={props.fileName}
 				label="File name"
-				onChange={(e) => props.handleFileNameChange(e.target.value)}
+				onChange={onFileNameChanged}
 				variant="outlined"
 			/>
 		);
+
+	if (props.screenshot) {
+		handleScreenshot();
+	}
 
 	return (
 		<VBox centered={false}>
@@ -79,6 +91,7 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 			<Spacer amount="1em" />
 
 			<Button
+				aria-pressed={props.screenshot}
 				onClick={handleScreenshot}
 				size="medium"
 				startIcon={<ScreenshotMonitor />}
