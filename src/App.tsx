@@ -274,10 +274,10 @@ export default class App extends React.Component<Utils.Empty, AppState> {
 				this.setState({ windowPaddingH: value as number });
 				break;
 			case CodeWindowEvents.SHADOW_OFFSET_X:
-				this.setState({ windowDropShadowOffsetY: value as number });
+				this.setState({ windowDropShadowOffsetX: value as number });
 				break;
 			case CodeWindowEvents.SHADOW_OFFSET_Y:
-				this.setState({ windowDropShadowOffsetX: value as number });
+				this.setState({ windowDropShadowOffsetY: value as number });
 				break;
 			case CodeWindowEvents.SHADOW_ALPHA:
 				this.setState({ windowDropShadowAlpha: value as number });
