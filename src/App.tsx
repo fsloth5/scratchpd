@@ -265,6 +265,7 @@ export default function App(): JSX.Element {
 					handleFileNameChange={handleFileNameChange}
 					handleFileExtensionChange={handleFileExtensionChange}
 				/>
+
 				<Spacer amount="1em" />
 
 				{isMobile ? (
@@ -292,6 +293,8 @@ export default function App(): JSX.Element {
 						handleSceneButtonPress={handleSceneButtonPress}
 					/>
 				)}
+
+				<Spacer amount="0.5em" />
 			</VBox>
 		</div>
 	);
