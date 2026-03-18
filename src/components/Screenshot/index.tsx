@@ -12,7 +12,6 @@ import Spacer from "../Spacer";
 
 interface ScreenshotProps {
 	appRef: React.RefObject<HTMLDivElement>;
-	screenshot: boolean;
 	fileName: string;
 	fileExtension: string;
 	handleFileNameChange: (value: string) => void;
@@ -69,10 +68,6 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 			/>
 		);
 
-	if (props.screenshot) {
-		handleScreenshot();
-	}
-
 	return (
 		<VBox centered={false}>
 			<HBox centered={false}>
@@ -91,7 +86,6 @@ export default function Screenshot(props: ScreenshotProps): JSX.Element {
 			<Spacer amount="1em" />
 
 			<Button
-				aria-pressed={props.screenshot}
 				onClick={handleScreenshot}
 				size="medium"
 				startIcon={<ScreenshotMonitor />}
