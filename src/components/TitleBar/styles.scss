@@ -38,7 +38,6 @@ $gray: #222629;
   position: absolute;
   text-align: center;
   z-index: 1;
-  font-size: 1.2em;
   width: 100%;
 }
 
@@ -69,16 +68,4 @@ $gray: #222629;
 .circle {
   @include titlebar-item;
   border-radius: 360px;
-}
-
-@media (max-width: 912px) {
-  #tb-title {
-    font-size: 1.54vw;
-  }
-}
-
-@media (max-width: 414px) {
-  #tb-title {
-    font-size: 3vw;
-  }
 }

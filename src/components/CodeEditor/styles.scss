@@ -10,3 +10,7 @@
   user-select: none;
   padding: 0 1em 0 0;
 }
+
+.npm__react-simple-code-editor__textarea:focus {
+  outline: none !important;
+}

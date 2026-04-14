@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import React from "react";
+import { useState } from "react";
 import Editor from "react-simple-code-editor";
 
 import { HBox, VBox } from "../Container";
@@ -34,7 +34,7 @@ function Lines(props: EditorLineProps): JSX.Element {
 }
 
 export default function CodeEditor(props: CodeEditorProps): JSX.Element {
-	const [code, setCode] = React.useState(
+	const [code, setCode] = useState(
 		'function doSomething() {           \n console.log("Hello!"); \n}',
 	);
 

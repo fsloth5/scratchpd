@@ -33,7 +33,7 @@ export default function Selection(props: SelectionProps): JSX.Element {
 		<FormControl fullWidth>
 			<InputLabel>{props.label}</InputLabel>
 			<Select
-				style={{ zIndex: 2000 }}
+				style={{ zIndex: 99999 }}
 				value={value}
 				label={props.label}
 				onChange={handleChange}

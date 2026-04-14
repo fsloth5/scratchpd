@@ -15,11 +15,13 @@ import TitleBar from "../TitleBar";
 interface WindowSectionProps {
 	windowBgColor: string;
 	shadowsToggled: boolean;
+	editorFontSize: number;
 	onSceneChange: CodeWindowEvents.CodeWindowChange;
 }
 
 interface TitleBarOptionsProps {
 	onWindowTitleBarChange: (value: string) => void;
+	editorFontSize: number;
 }
 
 interface WindowPaddingOptionsProps {
@@ -40,6 +42,7 @@ interface WindowBackdropOptionsProps {
 interface TitleBarThemeContainerProps {
 	onClick: (value: string) => void;
 	theme: string;
+	editorFontSize: number;
 }
 
 interface ColorPickerProps {
@@ -59,6 +62,7 @@ export default function WindowSection(props: WindowSectionProps): JSX.Element {
 						CodeWindowEvents.CodeWindowEvents.TITLEBAR,
 						props.onSceneChange,
 					)}
+					editorFontSize={props.editorFontSize}
 				/>
 			</SettingAccordion>
 
@@ -118,11 +122,13 @@ function TitleBarOptions(props: TitleBarOptionsProps): JSX.Element {
 				<TitleBarThemeContainer
 					onClick={props.onWindowTitleBarChange}
 					theme="macos"
+					editorFontSize={props.editorFontSize}
 				/>
 
 				<TitleBarThemeContainer
 					onClick={props.onWindowTitleBarChange}
 					theme="windows"
+					editorFontSize={props.editorFontSize}
 				/>
 			</List>
 		</VBox>
@@ -145,7 +151,7 @@ function TitleBarThemeContainer(
 					"0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)",
 			}}
 		>
-			<TitleBar theme={props.theme} />
+			<TitleBar theme={props.theme} editorFontSize={props.editorFontSize} />
 		</div>
 	);
 }

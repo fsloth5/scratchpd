@@ -1,3 +1,4 @@
+import Monitor from "@mui/icons-material/Monitor";
 import { createTheme } from "@mui/material/styles";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CodeWindowEvents } from "./CodeWindowEvents";
@@ -6,7 +7,6 @@ import CodeWindow from "./components/CodeWindow";
 import { HBox, VBox } from "./components/Container";
 import Screenshot from "./components/Screenshot";
 import { default as EditorMenu } from "./components/SettingsMenus";
-import SettingsTabs from "./components/SettingsTabs";
 import Spacer from "./components/Spacer";
 import type * as Utils from "./Utils";
 
@@ -47,6 +47,28 @@ const GithubRibbon = (): JSX.Element => (
 	</a>
 );
 
+function NotAvailableOnMobile(): JSX.Element {
+	return (
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				justifyContent: "center",
+				height: "100vh",
+				gap: "16px",
+				textAlign: "center",
+				padding: "2rem",
+			}}
+		>
+			<Monitor />
+			<p style={{ fontSize: "1.25rem", color: "#555", margin: 0 }}>
+				Only available on desktops 🥲
+			</p>
+		</div>
+	);
+}
+
 export default function App(): JSX.Element {
 	const defaultTheme = THEMES[3];
 
@@ -61,7 +83,9 @@ export default function App(): JSX.Element {
 		FILE_EXTENSIONS[0],
 	);
 	const [fileName, setFileName] = useState<string>("HelloWorld");
-	const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+	const [isDesktop, setIsDesktop] = useState<boolean>(
+		window.innerWidth >= 1024,
+	);
 	const [openSceneWindow, setOpenSceneWindow] = useState<boolean>(false);
 	const [openThemeWindow, setOpenThemeWindow] = useState<boolean>(false);
 	const [sceneWindowEverOpened, setSceneWindowEverOpened] =
@@ -111,7 +135,7 @@ export default function App(): JSX.Element {
 	// Window resize
 	useEffect(() => {
 		const handleWindowSizeChange = () => {
-			setIsMobile(window.innerWidth <= 768);
+			setIsDesktop(window.innerWidth >= 1024);
 		};
 
 		window.addEventListener("resize", handleWindowSizeChange);
@@ -226,13 +250,22 @@ export default function App(): JSX.Element {
 
 	const spacerAmount = "2em";
 
-	return (
+	useEffect(() => {
+		setTimeout(() => {
+			window.scrollTo({
+				top: document.body.scrollHeight,
+				behavior: "smooth",
+			});
+		}, 300);
+	}, []);
+
+	return isDesktop ? (
 		<div ref={appRef}>
 			<GithubBanner>
 				<GithubRibbon />
 			</GithubBanner>
 
-			<VBox centered={true}>
+			<VBox centered={true} id="centered-content">
 				<HBox centered={true}>
 					<h1 id="header">Scratchpad</h1>
 				</HBox>
@@ -268,35 +301,27 @@ export default function App(): JSX.Element {
 
 				<Spacer amount="1em" />
 
-				{isMobile ? (
-					<SettingsTabs
-						onCodeWindowChange={handleCodeWindowChanges}
-						selectedLanguage={editorLanguage}
-						selectedTheme={editorTheme}
-						windowBgColor={windowBgColor}
-						shadowsToggled={showWindowDropShadow}
-						lineNumbersToggled={showLineNumbers}
-					/>
-				) : (
-					<EditorMenu
-						openThemeWindow={openThemeWindow}
-						themeWindowEverOpened={themeWindowEverOpened}
-						openSceneWindow={openSceneWindow}
-						sceneWindowEverOpened={sceneWindowEverOpened}
-						editorLanguage={editorLanguage}
-						editorTheme={editorTheme}
-						windowBgColor={windowBgColor}
-						shadowsToggled={showWindowDropShadow}
-						lineNumbersToggled={showLineNumbers}
-						handleCodeWindowChanges={handleCodeWindowChanges}
-						handleThemeButtonPress={handleThemeButtonPress}
-						handleSceneButtonPress={handleSceneButtonPress}
-					/>
-				)}
+				<EditorMenu
+					openThemeWindow={openThemeWindow}
+					themeWindowEverOpened={themeWindowEverOpened}
+					openSceneWindow={openSceneWindow}
+					sceneWindowEverOpened={sceneWindowEverOpened}
+					editorLanguage={editorLanguage}
+					editorTheme={editorTheme}
+					windowBgColor={windowBgColor}
+					shadowsToggled={showWindowDropShadow}
+					lineNumbersToggled={showLineNumbers}
+					editorFontSize={editorFontSize}
+					handleCodeWindowChanges={handleCodeWindowChanges}
+					handleThemeButtonPress={handleThemeButtonPress}
+					handleSceneButtonPress={handleSceneButtonPress}
+				/>
 
 				<Spacer amount="0.5em" />
 			</VBox>
 		</div>
+	) : (
+		<NotAvailableOnMobile />
 	);
 }
 

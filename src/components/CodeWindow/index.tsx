@@ -25,10 +25,9 @@ interface CodeWindowProps {
 export default function CodeWindow(props: CodeWindowProps): JSX.Element {
 	const windowStyle = props.showDropShadow
 		? {
-				boxShadow: `${props.dropShadowOffsets.x}px ${
-					props.dropShadowOffsets.y
+			boxShadow: `${props.dropShadowOffsets.x}px ${props.dropShadowOffsets.y
 				}px 8px 0 rgba(0,0,0,${props.dropShadowAlpha / 100})`,
-			}
+		}
 		: undefined;
 
 	const windowBgStyle = {
@@ -39,7 +38,11 @@ export default function CodeWindow(props: CodeWindowProps): JSX.Element {
 	return (
 		<VBox centered={false} id="code-window-bg" style={windowBgStyle}>
 			<VBox centered={false} id="code-window" style={windowStyle}>
-				<TitleBar theme={props.titlebarTheme} fileName={props.fileName} />
+				<TitleBar
+					theme={props.titlebarTheme}
+					editorFontSize={props.editorFontSize}
+					fileName={props.fileName}
+				/>
 				<CodeEditor
 					fontFamily={props.editorFont}
 					fontSize={props.editorFontSize}

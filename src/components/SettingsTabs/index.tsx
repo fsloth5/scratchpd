@@ -23,6 +23,7 @@ interface SettingsTabsProps {
 	windowBgColor: string;
 	shadowsToggled: boolean;
 	lineNumbersToggled: boolean;
+	editorFontSize: number;
 }
 
 function switchTab(
@@ -57,6 +58,7 @@ function switchTab(
 					lineNumbersToggled={props.lineNumbersToggled}
 					onSceneChange={props.onCodeWindowChange}
 					windowBgColor={props.windowBgColor}
+					editorFontSize={props.editorFontSize}
 				/>
 			);
 		default:
@@ -79,18 +81,18 @@ export default function SettingsTabs(props: SettingsTabsProps): JSX.Element {
 	return newTab ? (
 		<VBox id="settings-tab" centered={false}>
 			<Tabs onChange={handleChange} value={value} variant="fullWidth">
-				<Tab icon={<PaletteIcon />} label="Theme" />
-				<Tab icon={<CodeIcon />} label="Language" />
-				<Tab icon={<WindowIcon />} label="Scene" />
+				<Tab icon={<PaletteIcon />} />
+				<Tab icon={<CodeIcon />} />
+				<Tab icon={<WindowIcon />} />
 			</Tabs>
 			{newTab}
 		</VBox>
 	) : (
 		<VBox id="settings-tab" centered={false}>
 			<Tabs onChange={handleChange} value={value} variant="fullWidth">
-				<Tab icon={<PaletteIcon />} label="Theme" />
-				<Tab icon={<CodeIcon />} label="Language" />
-				<Tab icon={<WindowIcon />} label="Scene" />
+				<Tab icon={<PaletteIcon />} />
+				<Tab icon={<CodeIcon />} />
+				<Tab icon={<WindowIcon />} />
 			</Tabs>
 		</VBox>
 	);

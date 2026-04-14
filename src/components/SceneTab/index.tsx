@@ -11,6 +11,7 @@ interface SceneTabProps {
 	windowBgColor: string;
 	shadowsToggled: boolean;
 	lineNumbersToggled: boolean;
+	editorFontSize: number;
 	onSceneChange: CodeWindowChange;
 }
 
@@ -26,6 +27,7 @@ export default function SceneTab(props: SceneTabProps): JSX.Element {
 					windowBgColor={props.windowBgColor}
 					shadowsToggled={props.shadowsToggled}
 					onSceneChange={props.onSceneChange}
+					editorFontSize={props.editorFontSize}
 				/>
 				<EditorSection
 					toggleLineNumbers={props.lineNumbersToggled}

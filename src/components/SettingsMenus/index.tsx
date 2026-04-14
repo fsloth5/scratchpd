@@ -29,6 +29,7 @@ interface SceneSettingsWindowProps {
 	windowBgColor: string;
 	shadowsToggled: boolean;
 	lineNumbersToggled: boolean;
+	editorFontSize: number;
 	onSceneChange: CodeWindowChange;
 	position: "s-right" | "right";
 	animation: "" | "slide-in-right" | "slide-out-right";
@@ -82,6 +83,7 @@ const SceneSettingsMenu = (props: SceneSettingsWindowProps): JSX.Element => {
 				lineNumbersToggled={props.lineNumbersToggled}
 				windowBgColor={props.windowBgColor}
 				onSceneChange={props.onSceneChange}
+				editorFontSize={props.editorFontSize}
 			/>
 		</VBox>
 	);
@@ -97,7 +99,7 @@ interface EditorMenuProps {
 	windowBgColor: string;
 	shadowsToggled: boolean;
 	lineNumbersToggled: boolean;
-
+	editorFontSize: number;
 	handleCodeWindowChanges: CodeWindowChange;
 	handleThemeButtonPress: (open: boolean, everOpened: boolean) => void;
 	handleSceneButtonPress: (open: boolean, everOpened: boolean) => void;
@@ -127,6 +129,7 @@ export default (props: EditorMenuProps): JSX.Element => {
 				lineNumbersToggled={props.lineNumbersToggled}
 				windowBgColor={props.windowBgColor}
 				onSceneChange={props.handleCodeWindowChanges}
+				editorFontSize={props.editorFontSize}
 				position={props.openSceneWindow ? "right" : "s-right"}
 				animation={
 					!props.sceneWindowEverOpened
